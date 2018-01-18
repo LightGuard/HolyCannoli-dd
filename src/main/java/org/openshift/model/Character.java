@@ -7,9 +7,9 @@ import static java.util.Arrays.asList;
  * Created by spousty on 8/22/14.
  */
 public class Character {
-    Random rand = new Random();
+    private Random rand = new Random();
     private int  hitpoints, goldpieces;
-    private final HashSet<String> attributeNames =  new HashSet<String>(asList("strength", "intelligence", "charisma", "wisdom", "dexterity", "constitution"));
+    private final HashSet<String> attributeNames =  new HashSet<String>(asList("strength", "intelligence", "charisma", "wisdom", "dexterity", "constitution", "loc"));
     private List<String> races =  asList( "Human", "Dwarf", "Halfling", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Nerd");
     private List<String> playerClass =  asList("Warrior", "Ranger", "Paladin", "Cleric", "Monk", "Wizard", "Thief", "Assassin", "Druid", "Wizard", "Coder");
     private HashMap allAttributes = new HashMap(18);
@@ -83,7 +83,7 @@ public class Character {
         result = 31 * result + hitpoints;
         result = 31 * result + goldpieces;
         result = 31 * result + (allAttributes != null ? allAttributes.hashCode() : 0);
-        result = 31 * rand.nextInt();
+        result = 31 * result + rand.nextInt();
         return result;
     }
 }
