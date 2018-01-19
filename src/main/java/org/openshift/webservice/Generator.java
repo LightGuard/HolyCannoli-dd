@@ -6,6 +6,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.xpath.SourceTree;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.io.IOException;
@@ -58,14 +60,27 @@ public class Generator {
         //build the POST
         System.out.println("About to Post");
 
-        HttpClient client = new DefaultHttpClient();
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+
+        String responseString = org.apache.http.client.fluent.Request.Post("http://mongoservice:8080/ws/players")
+                .bodyString(gson.toJson(character.getAllAttributes()), ContentType.APPLICATION_JSON)
+                .execute().returnContent().asString();
+
+        System.out.println("for debugging");
+
+       /* HttpClient client = new DefaultHttpClient();
         try {
             HttpPost post = new HttpPost("http://mongoservice:8080/ws/players");
             post.addHeader("Content-Type", "application/json");
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
             System.out.println(gson.toJson(character.getAllAttributes()));
-            post.setEntity(new StringEntity(gson.toJson(character.getAllAttributes())));
+            StringEntity stringEntity = new StringEntity(gson.toJson(character.getAllAttributes()));
+            stringEntity.setContentType("application/json");
+            post.setEntity(stringEntity);
+
             HttpResponse response = client.execute(post);
             System.out.println("status code: " + response.getStatusLine().getStatusCode());
             System.out.println("status message: " + response.getStatusLine().getReasonPhrase());
@@ -84,6 +99,8 @@ public class Generator {
         } finally {
             client.getConnectionManager().shutdown();
         }
+        */
+       return responseString;
 
     }
 
