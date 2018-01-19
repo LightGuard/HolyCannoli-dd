@@ -64,7 +64,7 @@ public class Generator {
             post.addHeader("Content-Type", "application/json");
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            System.out.println(new StringEntity(gson.toJson(character.getAllAttributes())).toString());
+            System.out.println(gson.toJson(character.getAllAttributes()));
             post.setEntity(new StringEntity(gson.toJson(character.getAllAttributes())));
             HttpResponse response = client.execute(post);
             System.out.println("status code: " + response.getStatusLine().getStatusCode());
