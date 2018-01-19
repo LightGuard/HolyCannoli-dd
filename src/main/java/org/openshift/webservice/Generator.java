@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.xpath.SourceTree;
 import org.openshift.model.*;
 import org.openshift.model.Character;
 
@@ -64,6 +65,8 @@ public class Generator {
             Gson gson = builder.create();
             post.setEntity(new StringEntity(gson.toJson(character.getAllAttributes())));
             HttpResponse response = client.execute(post);
+            System.out.println("status code: " + response.getStatusLine().getStatusCode());
+            System.out.println("status message: " + response.getStatusLine().getReasonPhrase());
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException("request failed for some non-helpful reason");
             }
