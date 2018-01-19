@@ -30,9 +30,6 @@ public class Generator {
 
     private org.openshift.model.Character character = new Character();
 
-    @Context
-    private SecurityContext securityContext;
-
     @GET()
     @Produces("application/json")
     public HashMap MakeACharacter(){
@@ -54,26 +51,15 @@ public class Generator {
     @Path("dd")
     public String MakeACharacterForMongo(@Context HttpServletRequest request) throws Exception{
 
-        ///get the userid from keycloak here and use it for the name
-        String name = securityContext.getUserPrincipal().getName();
-        character.setName(name);
-
-        // turn the character to JSON
-
-
-        //now send the character on to the Mongo Service
-        //Get the token
-        KeycloakSecurityContext mySecurityContext = (KeycloakSecurityContext)request.getAttribute(KeycloakSecurityContext.class.getName());
-        String token = mySecurityContext.getTokenString();
+        ///All Characters get the best name in the world
+        character.setName("Steve");
 
         //build the POST
         System.out.println("About to Post");
 
         HttpClient client = new DefaultHttpClient();
         try {
-            HttpPost post = new HttpPost("https://j1mongo-thesteve0.rhcloud.com/ws/players");
-            post.addHeader("Authorization", "Bearer " + token);
-            post.addHeader("Content-Type", "application/json");
+            HttpPost post = new HttpPost("http://mongoservice:8080/ws/players");
                 post.setEntity(new StringEntity(JsonSerialization.writeValueAsString(character.getAllAttributes())));
                 HttpResponse response = client.execute(post);
                 if (response.getStatusLine().getStatusCode() != 200) {
@@ -91,22 +77,6 @@ public class Generator {
         } finally {
             client.getConnectionManager().shutdown();
         }
-        /*
-        Client client = ClientBuilder.newClient();
-        WebTarget resourceTarget = client.target("https://j1mongo-thesteve0.rhcloud.com/ws/players");
-        Invocation.Builder invocationBuilder = resourceTarget.request("application/json").header("Authorization", "bearer " + token);
-        Invocation invocation = invocationBuilder.buildPost(Entity.json(character));
-        Response response = invocation.invoke();
-        */
-        //System.out.println("response code: " + response.getStatus());
-
-        /*
-
-        https://jax-rs-spec.java.net/nonav/2.0-SNAPSHOT/apidocs/javax/ws/rs/client/Client.html
-        https://jax-rs-spec.java.net/nonav/2.0-SNAPSHOT/apidocs/javax/ws/rs/client/WebTarget.html
-        https://jax-rs-spec.java.net/nonav/2.0-SNAPSHOT/apidocs/javax/ws/rs/client/Invocation.Builder.html
-         */
-        //return character.getAllAttributes();
 
     }
 

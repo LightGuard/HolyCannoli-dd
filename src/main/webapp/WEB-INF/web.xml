@@ -19,20 +19,6 @@
             <url-pattern>/ws/*</url-pattern>
         </servlet-mapping>
 
-        <security-constraint>
-		    <web-resource-collection>
-		        <url-pattern>/ws/*</url-pattern>
-		    </web-resource-collection>
-		    <auth-constraint>
-		        <role-name>player</role-name>
-		    </auth-constraint>
-		</security-constraint>
-    	<login-config>
-		    <auth-method>keycloak</auth-method>
-		</login-config>
 
-		<security-role>
-		    <role-name>player</role-name>
-		</security-role>
 </web-app>
 
