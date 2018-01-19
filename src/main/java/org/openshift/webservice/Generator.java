@@ -64,7 +64,7 @@ public class Generator {
         Gson gson = builder.create();
 
 
-        String responseString = org.apache.http.client.fluent.Request.Post("http://mongoservice:8080/ws/players")
+        String responseString = org.apache.http.client.fluent.Request.Post("http://mongoservice-holycanoli.b9ad.pro-us-east-1.openshiftapps.com/ws/players")
                 .bodyString(gson.toJson(character.getAllAttributes()), ContentType.APPLICATION_JSON)
                 .execute().returnContent().asString();
 
