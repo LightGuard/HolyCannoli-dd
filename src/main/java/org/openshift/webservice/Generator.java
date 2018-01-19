@@ -61,6 +61,7 @@ public class Generator {
         HttpClient client = new DefaultHttpClient();
         try {
             HttpPost post = new HttpPost("http://mongoservice:8080/ws/players");
+            post.addHeader("Content-Type", "application/json");
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
             post.setEntity(new StringEntity(gson.toJson(character.getAllAttributes())));
