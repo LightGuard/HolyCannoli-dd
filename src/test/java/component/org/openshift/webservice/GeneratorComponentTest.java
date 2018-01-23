@@ -19,8 +19,6 @@ package component.org.openshift.webservice;
 
 import java.util.HashMap;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -53,12 +51,9 @@ public class GeneratorComponentTest {
 
     @Test
     public void persistCharTest(Generator charGenerator) throws Exception {
-        final String characterReturn = charGenerator.MakeACharacterForMongo(null);
-        final GsonBuilder builder = new GsonBuilder();
-        final Gson gson = builder.create();
+        final HashMap characterReturn = charGenerator.MakeACharacterForMongo(null);
 
-        final HashMap characterMap = gson.fromJson(characterReturn, HashMap.class);
-        assertThat(characterMap).containsOnlyKeys("strength", "intelligence", "charisma", "wisdom", "dexterity",
+        assertThat(characterReturn).containsOnlyKeys("strength", "intelligence", "charisma", "wisdom", "dexterity",
                 "constitution", "loc", "race", "hitpoints", "name", "goldpieces", "playerclass", "id");
     }
 }
