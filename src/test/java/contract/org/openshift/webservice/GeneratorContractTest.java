@@ -71,7 +71,7 @@ public class GeneratorContractTest {
     public void assertCreatingCharacterWhichIsPersisted() {
         final RequestSpecBuilder builder = new RequestSpecBuilder();
         builder.setBaseUri(SERVICE_URI)
-                .setBasePath("/ws/char/dd")
+                .setBasePath("/ws/char")
                 .build();
 
         given()
