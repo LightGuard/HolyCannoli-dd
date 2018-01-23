@@ -11,8 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.openshift.model.Character;
 
 /**
@@ -47,7 +45,7 @@ public class Generator {
     @GET()
     @Produces("application/json")
     @Path("dd")
-    public String MakeACharacterForMongo(@Context HttpServletRequest request) throws Exception {
+    public HashMap MakeACharacterForMongo(@Context HttpServletRequest request) throws Exception {
 
         ///All Characters get the best name in the world
         character.setName("Steve");
@@ -58,10 +56,7 @@ public class Generator {
         String savedId = characterSaver.saveCharacter(character);
         character.getAllAttributes().put("id", savedId);
 
-        final GsonBuilder builder = new GsonBuilder();
-        final Gson gson = builder.create();
-
-        return gson.toJson(character.getAllAttributes());
+        return character.getAllAttributes();
     }
 
 }
