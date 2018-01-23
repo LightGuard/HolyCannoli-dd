@@ -15,26 +15,19 @@
  * limitations under the License.
  */
 
-package unit.org.openshift.model;
+package component.org.openshift.webservice;
 
-import org.junit.Test;
+import java.util.UUID;
+
+import javax.enterprise.context.RequestScoped;
+
 import org.openshift.model.Character;
+import org.openshift.webservice.PersistCharacter;
 
-import static org.assertj.core.api.Assertions.*;
-
-public class CharacterTest {
-
-    @Test
-    public void testNoArgConstructor() {
-        final Character someChar = new Character();
-
-        assertThat(someChar).isNotNull();
-    }
-
-    @Test
-    public void getAllAttributes() {
-        final Character someChar = new Character();
-        assertThat(someChar.getAllAttributes()).containsOnlyKeys("strength", "intelligence", "charisma", "wisdom", "dexterity",
-                "constitution", "loc", "race", "hitpoints", "name", "goldpieces", "playerclass");
+@RequestScoped
+public class SimpleCharacterPersistence implements PersistCharacter {
+    @Override
+    public String saveCharacter(Character savableCharacter) {
+        return UUID.randomUUID().toString();
     }
 }

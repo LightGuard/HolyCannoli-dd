@@ -15,26 +15,18 @@
  * limitations under the License.
  */
 
-package unit.org.openshift.model;
+package org.openshift.webservice;
 
-import org.junit.Test;
 import org.openshift.model.Character;
 
-import static org.assertj.core.api.Assertions.*;
-
-public class CharacterTest {
-
-    @Test
-    public void testNoArgConstructor() {
-        final Character someChar = new Character();
-
-        assertThat(someChar).isNotNull();
-    }
-
-    @Test
-    public void getAllAttributes() {
-        final Character someChar = new Character();
-        assertThat(someChar.getAllAttributes()).containsOnlyKeys("strength", "intelligence", "charisma", "wisdom", "dexterity",
-                "constitution", "loc", "race", "hitpoints", "name", "goldpieces", "playerclass");
-    }
+/**
+ * Basic interface used to define the persisting of characters.
+ */
+public interface PersistCharacter {
+    /**
+     * Saves a character
+     * @param savableCharacter Character to be saved
+     * @return id of the saved character from the store
+     */
+    String saveCharacter(Character savableCharacter);
 }
